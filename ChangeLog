@@ -1,0 +1,33 @@
+0.1.2
+{
+	-Allow anonymous functions to be used in frame and Snip end scripts
+	-Allow values to be passed into frame and Snip end scripts
+}
+
+Beta - 0.1.3
+{
+	---
+	Steps to update from 0.1.2:
+	-Remove snip_animation_end_event() from the Animation End event in all objects
+	-Replace the boolean "should repeat" in snip_create_ext() value with a value from the new ae_snip_end enum
+	---
+
+	-You no longer need to add snip_animation_end_event() to your objects
+	-Allow Snips to be marked to play backwards with snip_set_backward/snip_set_forward
+			-Snips that will be played backwards will still work with loops
+			-Don't use a negative value for Snip speeds, use a positive value
+	-Changed the way Snips behave when finished playing. Instead of just a boolean
+		indicating whether or not to repeat, now it's an enum with 5 different options:
+			-ae_snip_end.end_stop
+			-ae_snip_end.end_repeat
+			-ae_snip_end.end_pingpong
+			-ae_snip_end.end_pingpong_first
+			-ae_snip_end.end_pingpong_last			
+	-Allow Snips to pingpong back and forth when they finish playing
+		-Three types of pinpong are available to determine when the Snip is "completed"
+			-pingpong: The Snip is completed when it gets to the first or last frame
+			-pingpong_first: The Snip is completed when it gets back to the first frame
+			-pingpong_last: The Snip us completed the last frame
+		-When a Snip completes it will execute the completion script, and then try to play the next Snip
+			if there is not another Snip to play then look at the Snip end type to determine what to do (stop/repeat/pingpong)
+}
