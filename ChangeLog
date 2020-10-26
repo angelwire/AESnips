@@ -8,7 +8,7 @@ Beta - 0.1.3
 {
 	---
 	Steps to update from 0.1.2:
-	-Remove snip_animation_end_event() from the Animation End event in all object
+	-Remove snip_animation_end_event() from the Animation End event in all objects
 	-Replace the boolean "should repeat" in snip_create_ext() value with a value from the new ae_snip_end enum
 	---
 
