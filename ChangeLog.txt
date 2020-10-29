@@ -4,40 +4,43 @@
 	-Allow values to be passed into frame and Snip end scripts
 }
 
-Beta - 0.1.3
+0.1.3
 {
----
-	Steps to update from 0.1.2:
-	-Remove snip_animation_end_event() from the Animation End event in all object
-	-Replace the boolean "should repeat" in snip_create_ext() value with a value from the new ae_snip_end enum
-	-Check the documentation for snip_set_end_type()
----
+
+!!!!!!!!
+!!! Steps to update from 0.1.2:
+!!! Remove snip_animation_end_event() from the Animation End event in all object
+!!! Replace any boolean "should repeat" in snip_create_ext() value with a value from the new ae_snip_end enum
+!!! Replace snip_set_repeat() with snip_set_end_type()
+!!!!!!!!
 
 	-You no longer need to add snip_animation_end_event() to your objects
-	-Allow Snips to be marked to play backwards with snip_set_backward/snip_set_forward
+	-Allow Snips to be marked to play backwards with snip_set_backward/snip_set_forward/snip_reverse
 			-Snips that will be played backwards will still work with loops
-			-Don't use a negative value for Snip speeds, use a positive value
+			-Snip and frame speeds should always be positive
 	-Changed the way Snips behave when finished playing. Instead of just a boolean
-		indicating whether or not to repeat, now it's an enum with 6 different options:
-			-ae_snip_end.end_stop //Freeze on last frame
-			-ae_snip_end.end_prime //Jump to first frame and freeze
+		indicating whether or not to repeat, now it's an enum with 7 different options:
+			-ae_snip_end.end_stop //Freeze on the completed frame
+			-ae_snip_end.end_stop_head //Jump to first frame and freeze
+			-ae_snip_end.end_stop_tail //Jump to last frame and freeze
 			-ae_snip_end.end_repeat //Jump to first frame and play again
 			-ae_snip_end.end_pingpong //Play the animation forwards and backwards
-			-ae_snip_end.end_pingpong_first //Same as pingpong with different end points
-			-ae_snip_end.end_pingpong_last	//Same as pingpong with different end points
+			-ae_snip_end.end_pingpong_head //Same as pingpong with different end points
+			-ae_snip_end.end_pingpong_tail	//Same as pingpong with different end points
 	-Allow Snips to pingpong back and forth when they finish playing
 		-Three types of pinpong are available to determine when the Snip is "completed"
 			-pingpong: The Snip is completed when it gets to the first or last frame
-			-pingpong_first: The Snip is completed when it gets back to the first frame
-			-pingpong_last: The Snip us completed the last frame
+			-pingpong_head: The Snip is completed when it plays the first frame
+			-pingpong_tail: The Snip us completed when it plays the last frame
 		-When a Snip completes it will execute the completion script, and then try to play the next Snip
 			if there is not another Snip to play then look at the Snip end type to determine what to do (stop/repeat/pingpong)
 	-Fixed snip_draw_debug to always draw a sprite in the proper place despite the axis position
 	-Added snip_speed_scale property to handle different sprite speeds
+	-Added snip_clone_transitions() to make all Transisions that apply to one Snip apply to another
+	-Added snip_clone_loops() to make all Loops that apply to one Snip apply to another (except for any Loops outside the destination Snip's bounds)
+	-Added snip_play_request(). It will only play the given Snip if that Snip isn't currently playing
+	-Added snip_stop(), snip_stop_head() and snip_stop_tail() to stop the Snips immediatly. Use head or tail to jump to the first or last frame (tail->last, head->first)
+	-Added snip_cancel_play_next()
 	-Made sure Snips are fully compatible with speeds set in the Sprite/Image editor
-	-Added snip_clone_transitions to make all Transisions that apply to one Snip apply to another
-	-Added snip_clone_loops to make all Loops that apply to one Snip apply to another (except for any Loops outside the destination Snip's bounds)
-	-Added snip_play_request. It will only play the given Snip if that Snip isn't currently playing
-	-Added snip_stop and snip_prime to stop the Snips immediatly and jump to the first or last frames
 	-Fixed snip_clone errors
 }
