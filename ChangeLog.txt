@@ -9,7 +9,7 @@
 
 !!!!!!!!
 !!! Steps to update from 0.1.2:
-!!! Remove snip_animation_end_event() from the Animation End event in all object
+!!! Remove snip_animation_end_event() from the Animation End event in all objects
 !!! Replace any boolean "should repeat" in snip_create_ext() value with a value from the new ae_snip_end enum
 !!! Replace snip_set_repeat() with snip_set_end_type()
 !!!!!!!!
@@ -43,4 +43,21 @@
 	-Added snip_cancel_play_next()
 	-Made sure Snips are fully compatible with speeds set in the Sprite/Image editor
 	-Fixed snip_clone errors
+}
+
+0.1.4
+{
+	!!!!!!!!
+	!!! Steps to update from 0.1.3:
+	!!! Trying to set a Snip's speed to a value less than 0 will throw an error, replace any negative speed values with a positive value and add snip_set_backward()
+	!!!!!!!!
+
+	-Added SnipPlayer struct to play Snips
+		-Objects can still play Snips without the need for a SnipPlayer
+		-Add SnipPlayers to an object to allow the object to play multiple Snips at the same time
+		-Each SnipPlayer needs to be added to the Step event in order to animate and the Draw event to be drawn
+		-SnipPlayers use similar playback functions, but must be preceeded by the SnipPlayer instance for example: my_snip_player.snip_play(my_snip)
+	-Added an ae_snip_direction variable to objects that play Snips.
+		-A PingPong style Snip can be played by multiple objects without one instance of the Snip impacting the other
+		-Setting a Snip's speed to a value less than 0 will throw an error, use snip_set_backward() instead
 }
